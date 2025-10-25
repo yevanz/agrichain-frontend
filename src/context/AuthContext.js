@@ -5,11 +5,17 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);  // { email, role: 'farmer' | 'buyer' | 'admin' }
+  const [user, setUser] = useState(null);
 
   const login = (userData) => {
     setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));  // Persist session
+    localStorage.setItem('user', JSON.stringify(userData));
+  };
+
+  const signup = (userData) => {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    users.push(userData);
+    localStorage.setItem('users', JSON.stringify(users));
   };
 
   const logout = () => {
@@ -23,7 +29,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   );

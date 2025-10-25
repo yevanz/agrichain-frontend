@@ -1,47 +1,51 @@
-/* Base theme and resets */
+/* Base theme and background image (public/background.jpg) */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
 :root{
-  --gold: #D4AF37;        /* main gold */
-  --gold-600: #b8860b;    /* darker gold */
-  --green: #2E7D32;       /* main green */
-  --green-700: #1B5E20;   /* darker green */
-  --bg-1: #FBFBF8;        /* page background light */
-  --card: #FFFFFF;        /* surfaces */
-  --muted: #6B6B6B;
+  --gold: #D4AF37;
+  --green: #2E7D32;
+  --bg-color: #FBFBF8;
+  --card: #FFFFFF;
+  --overlay: rgba(11, 25, 12, 0.35);
   --radius: 10px;
   --shadow: 0 8px 24px rgba(14,20,14,0.08);
   --control-height: 44px;
 }
 
-*{box-sizing:border-box}
-html,body,#root{height:100%}
-body{
-  margin:0;
+/* full-page background using a public asset */
+/* Put your image at public/background.jpg and update the filename below if needed */
+body {
+  margin: 0;
   font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-  background: radial-gradient(1200px 600px at 10% 10%, rgba(46,125,50,0.04), transparent 10%),
-              radial-gradient(900px 400px at 90% 90%, rgba(212,175,55,0.03), transparent 10%),
-              var(--bg-1);
-  color: var(--green-700);
+  color: var(--green);
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   line-height:1.45;
-  -webkit-tap-highlight-color: transparent;
+
+  /* background image layer + soft color radial accents */
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.55)),
+    radial-gradient(1200px 600px at 10% 10%, rgba(46,125,50,0.04), transparent 10%),
+    radial-gradient(900px 400px at 90% 90%, rgba(212,175,55,0.03), transparent 10%),
+    url('/background.jpg') center/cover no-repeat;
+  background-attachment: fixed;
 }
 
-/* sensible defaults */
-a{color:var(--green); text-decoration:none}
-h1,h2,h3,h4{color:var(--green-700); margin:0 0 .5rem}
-p{margin:0 0 1rem; color: #213621}
+/* If you want a darker overlay for readability, add a pseudo element on #root in App.css or use the .app-overlay below */
+.app-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none; /* doesn't block clicks */
+  background: linear-gradient(180deg, rgba(255,255,255,0.0), rgba(11,25,12,0.06));
+  mix-blend-mode: multiply;
+}
 
-/* utility container */
+/* remaining project styles (example) */
 .container{
   max-width:1100px;
   margin: 32px auto;
   padding: 24px;
 }
-
-/* cards and surfaces */
 .card{
   background: var(--card);
   border-radius: var(--radius);
